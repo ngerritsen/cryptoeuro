@@ -63,8 +63,8 @@ function coinToEuro($amount, $coinAsk, $btcPerEuro) {
     <p class="js-time time"></p>
 
     <p class="explain">
-      Put the currencies you want to see in the query string, with the amount you own, for example:
-      <i>"?LTC=120&amp;ETH=32.5"</i>
+      Type the currencies to convert in the query string, optionally with an amount, for example:
+      <i>"?LTC=120&amp;ETH=32.5"</i>. Auto refreshes every 30 seconds.
     </p>
 
     <p class="info">
