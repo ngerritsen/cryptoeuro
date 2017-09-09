@@ -46,8 +46,8 @@ function coinToEuro($amount, $coinAsk, $btcPerEuro) {
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
 
-<div class="container js-container">
-  <main>
+<div class="container">
+  <main class="js-container">
     <?php foreach($currencies as $currency): ?>
       <section class="section">
         <?php if ($currency['valid'] === false) : ?>
@@ -64,7 +64,7 @@ function coinToEuro($amount, $coinAsk, $btcPerEuro) {
 
     <p class="explain">
       Type the currencies to convert in the query string, optionally with an amount, for example:
-      <i>"?LTC=120&amp;ETH=32.5"</i>. Auto refreshes every 30 seconds.
+      <i>"?LTC=120&amp;ETH=32.5"</i>. Auto refreshes every minute.
     </p>
 
     <p class="info">

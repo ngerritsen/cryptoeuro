@@ -1,5 +1,5 @@
 (function () {
-  var REFRESH_INTERVAL = 30000;
+  var REFRESH_INTERVAL = 60000;
   var CONTAINER_SELECTOR = '.js-container';
   
   updateTime();
@@ -10,7 +10,7 @@
   
   function refresh() {
     var request = new XMLHttpRequest();
-    request.open('GET', '/' + window.location.search, true);
+    request.open('GET', window.location.pathname + window.location.search, true);
   
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
@@ -45,15 +45,16 @@
 
   function updateTime() {
     var currentTime = new Date();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
-    var seconds = currentTime.getSeconds();
-
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
+    var hours = addZero(currentTime.getHours());
+    var minutes = addZero(currentTime.getMinutes());
+    var seconds = addZero(currentTime.getSeconds());
 
     const timeString = hours + ':' + minutes + ':' + seconds;
 
     document.querySelector('.js-time').textContent = 'Last updated: ' + timeString;
+  }
+
+  function addZero(timePart) {
+    return timePart = timePart < 10 ? '0' + timePart : timePart;
   }
 })();
