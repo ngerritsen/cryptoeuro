@@ -1,4 +1,6 @@
 (function () {
+  'use strict';
+
   var REFRESH_INTERVAL = 60000;
   var CONTAINER_SELECTOR = '.js-container';
   

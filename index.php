@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 require_once('functions.php');
 
+$assetHashes = require_once('hashes.php');
+
 $currencies = tagsToCurrencyData($_GET);
 ?>
 <meta charset="utf-8">
@@ -14,7 +16,7 @@ $currencies = tagsToCurrencyData($_GET);
 <title>Cryptoeuro</title>
 
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-<link href="style.css" rel="stylesheet">
+<link href="style.css?<?= write($assetHashes['css']) ?>" rel="stylesheet">
 
 <div class="container">
   <main class="js-container">
@@ -44,4 +46,4 @@ $currencies = tagsToCurrencyData($_GET);
   <footer>
 </div>
 
-<script src="main.js"></script>
+<script src="main.js?<?= write($assetHashes['js']) ?>"></script>

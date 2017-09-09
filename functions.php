@@ -52,5 +52,5 @@ function coinToEuro(float $amount, float $coinAsk, float $btcPerEuro): float {
 function parseAmount($amount): float {
   $amount = (float)$amount;
 
-  return $amount === 0 ? 1 : $amount;
+  return (int)$amount === 0 ? 1 : $amount;
 }
