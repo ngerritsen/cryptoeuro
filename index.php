@@ -15,8 +15,9 @@ $currencies = tagsToCurrencyData($_GET);
 
 <title>Cryptoeuro</title>
 
-<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-<link href="style.css?<?= write($assetHashes['css']) ?>" rel="stylesheet">
+<link rel="shortcut icon" href="favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono">
+<link rel="stylesheet" href="style.css?<?= write($assetHashes['css']) ?>">
 
 <div class="container">
   <main class="js-container">
