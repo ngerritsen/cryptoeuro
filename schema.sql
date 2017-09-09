@@ -10,13 +10,12 @@ CREATE TABLE cryptocurrency_price (
     time timestamp  NOT NULL,
     sell float NOT NULL,
     buy float NOT NULL,
-    PRIMARY KEY (tag, time),
+    PRIMARY KEY (currency, time),
     FOREIGN KEY (currency) REFERENCES cryptocurrency(currency)
 );
 
 CREATE TABLE bitcoin_price (
-    time timestamp  NOT NULL,
+    time timestamp  NOT NULL PRIMARY KEY,
     sell float NOT NULL,
-    buy float NOT NULL,
-    PRIMARY KEY (tag, time)
+    buy float NOT NULL
 );
