@@ -40,6 +40,7 @@ function coinToEuro($amount, $coinAsk, $btcPerEuro) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="keywords" content="crypto, currencies, euro, bitcoin">
 <meta name="description" content="Converts cryptocurrencies to euro">
+<meta name="keywords" content="crypto, currencies, euro, bitcoin">
 
 <title>Cryptoeuro</title>
 
