@@ -13,27 +13,33 @@ body {
   max-width: 420px;
 }
 
-.currency,
-.value {
-  font-size: 21px;
+.currencies {
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .currency {
-  margin: 0 0 10px;
+  margin-bottom: 34px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid #666;
+}
+
+.error,
+.value {
+  padding: 0;
+  margin: 0;
+}
+
+.value {
+  font-size: 21px;
+  line-height: 1.5;
 }
 
 .error {
   font-size: 18px;
   color: #e74c3c;
   margin: 8px 0;
-}
-
-.section {
-  margin-bottom: 34px;
-  padding-bottom: 34px;
-  border-bottom: 1px solid #666;
 }
 
 .time {
@@ -52,6 +58,11 @@ body {
 .link:focus {
   color: #409ad6;
   text-decoration: underline;
+}
+
+.explain,
+.info {
+  line-height: 1.2;
 }
 
 .explain {

@@ -21,16 +21,20 @@ $currencies = tagsToCurrencyData($_GET);
 
 <div class="container">
   <main class="js-container">
-    <?php foreach($currencies as $currency): ?>
-      <section class="section">
-        <?php if ($currency['valid'] === false) : ?>
-            <p class="error">Invalid currency "<?= write($currency['tag']) ?>"</p>
-        <?php else : ?>
-            <h2 class="currency"><?=  write($currency['amount']) ?> <?= write($currency['tag']) ?></h2>
-            <p class="value">€ <?=  write($currency['euro']) ?></p>
-        <?php endif; ?>
-      </section>
-    <?php endforeach ?>
+    <ul class="currencies">
+      <?php foreach($currencies as $currency): ?>
+        <li class="currency">
+          <?php if ($currency['valid'] === false) : ?>
+              <p class="error">Invalid currency "<?= write($currency['tag']) ?>"</p>
+          <?php else : ?>
+              <p class="value">
+                <?=  write($currency['amount']) ?> <?= write($currency['tag']) ?><br>
+                € <?=  number_format($currency['euro'], 2, ',', '.') ?>
+              </p>
+          <?php endif; ?>
+        </li>
+      <?php endforeach ?>
+    </ul>
   </main>
   <footer>
     <p class="js-time time"></p>
@@ -42,7 +46,7 @@ $currencies = tagsToCurrencyData($_GET);
 
     <p class="info">
       Currency is converted to BTC using <a class="link" href="https://bittrex.com">Bittrex</a>,
-      then to EUR using <a class="link" href="https://blockchain.info">blockchain.info</a>.
+      then to EUR using <a class="link" href="https://coinbase.com">Coinbase</a>. All according to sell prices.
     </p>
   <footer>
 </div>

@@ -7,7 +7,7 @@ function write($value) {
 
 function tagsToCurrencyData(array $tags): array {
   $currencies = [];
-  $btcPerEuro = getBtcPerEuro();
+  $btcSellPrice = getBtcSellPrice();
 
   foreach ($tags as $tag => $amount) {
     $amount = parseAmount($amount);
@@ -26,7 +26,7 @@ function tagsToCurrencyData(array $tags): array {
     $currencies[] = [
       'tag' => $tag,
       'valid' => true,
-      'euro' => coinToEuro($amount, $stats['Ask'], $btcPerEuro),
+      'euro' => coinToEuro($amount, $stats['Ask'], $btcSellPrice),
       'amount' => $amount
     ];
   }
@@ -34,8 +34,11 @@ function tagsToCurrencyData(array $tags): array {
   return $currencies;
 }
 
-function getBtcPerEuro(): float {
-  return (float)file_get_contents('https://blockchain.info/tobtc?currency=EUR&value=1');
+function getBtcSellPrice(): float {
+  $raw = file_get_contents('https://api.coinbase.com/v2/prices/BTC-EUR/sell');
+  $data = json_decode($raw, true);
+
+  return (float)$data['data']['amount'];
 }
 
 function getCoinStats(string $tag) {
@@ -45,8 +48,8 @@ function getCoinStats(string $tag) {
   return $data['result'][0];
 }
 
-function coinToEuro(float $amount, float $coinAsk, float $btcPerEuro): float {
-  return round($amount * ($coinAsk / $btcPerEuro), 2);
+function coinToEuro(float $amount, float $coinAsk, float $btcSellPrice): float {
+  return $amount * ($coinAsk * $btcSellPrice);
 }
 
 function parseAmount($amount): float {
