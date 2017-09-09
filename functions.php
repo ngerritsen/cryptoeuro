@@ -35,10 +35,14 @@ function tagsToCurrencyData(array $tags): array {
 }
 
 function getBtcSellPrice(): float {
+  return (float)getBtcStats()['amount'];
+}
+
+function getBtcStats(): array {
   $raw = file_get_contents('https://api.coinbase.com/v2/prices/BTC-EUR/sell');
   $data = json_decode($raw, true);
 
-  return (float)$data['data']['amount'];
+  return $data['data'];
 }
 
 function getCoinStats(string $tag) {
