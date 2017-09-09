@@ -1,0 +1,5 @@
+language: bash
+script:
+  - curl -3 -T index.php ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
+  - curl -3 -T main.js ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
+  - curl -3 -T style.css ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
