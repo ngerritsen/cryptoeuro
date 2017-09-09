@@ -21,10 +21,10 @@ $currencies = tagsToCurrencyData($_GET);
     <?php foreach($currencies as $currency): ?>
       <section class="section">
         <?php if ($currency['valid'] === false) : ?>
-            <p class="error">Invalid currency "<?= $currency['tag'] ?>"</p>
+            <p class="error">Invalid currency "<?= write($currency['tag']) ?>"</p>
         <?php else : ?>
-            <h2 class="currency"><?= $currency['amount'] ?> <?= $currency['tag'] ?></h2>
-            <p class="value">€ <?= $currency['euro'] ?></p>
+            <h2 class="currency"><?=  write($currency['amount']) ?> <?= write($currency['tag']) ?></h2>
+            <p class="value">€ <?=  write($currency['euro']) ?></p>
         <?php endif; ?>
       </section>
     <?php endforeach ?>

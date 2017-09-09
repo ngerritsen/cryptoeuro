@@ -1,6 +1,10 @@
 <?php
 declare(strict_types = 1);
 
+function write($value) {
+  return htmlspecialchars((string)$value);
+}
+
 function tagsToCurrencyData(array $tags): array {
   $currencies = [];
   $btcPerEuro = getBtcPerEuro();
