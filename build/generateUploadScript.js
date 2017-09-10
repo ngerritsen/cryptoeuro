@@ -3,6 +3,10 @@
 const glob = require('glob');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
+
+const shouldUploadVendor = execSync('git diff HEAD^ HEAD', { encoding: 'utf-8' })
+  .includes('composer.lock');
 
 const paths = [
   ...glob.sync('*.{php,js,css,png,htaccess}'),
@@ -10,8 +14,11 @@ const paths = [
   ...glob.sync('etc/**/*.php'),
   ...glob.sync('src/**/*.php'),
   ...glob.sync('templates/**/*.php'),
-  ...glob.sync('vendor/**/*.{php,json}')
 ];
+
+if (shouldUploadVendor) {
+  paths.push(...glob.sync('vendor/**/*.{php,json}'));
+}
 
 const uploadScript = paths
   .map((filepath) => {
