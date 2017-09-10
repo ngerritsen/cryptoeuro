@@ -13,7 +13,7 @@ const paths = [
   ...glob.sync('app/**/*.php'),
   ...glob.sync('etc/**/*.php'),
   ...glob.sync('src/**/*.php'),
-  ...glob.sync('templates/**/*.php'),
+  ...glob.sync('templates/**/*.twig'),
 ];
 
 if (shouldUploadVendor) {
