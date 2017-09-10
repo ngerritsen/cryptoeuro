@@ -2,3 +2,5 @@ etc/hashes.php
 vendor
 .idea
 .template-cache
+node_modules
+upload.sh

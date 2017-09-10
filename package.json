@@ -1,0 +1,28 @@
+{
+  "name": "cryptoeuro",
+  "version": "1.0.0",
+  "description": "Converts cryptocurrencies to euro",
+  "main": "main.js",
+  "scripts": {
+    "assets": "node ./build/generateHashes.js",
+    "upload": "node ./build/generateUploadScript.js; sh upload.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngerritsen/cryptoeuro.git"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "bitcoin",
+    "euro"
+  ],
+  "author": "Niels Gerritsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngerritsen/cryptoeuro/issues"
+  },
+  "homepage": "https://github.com/ngerritsen/cryptoeuro#readme",
+  "devDependencies": {
+    "glob": "^7.1.2"
+  }
+}

@@ -2,16 +2,11 @@ language: php
 php:
   - 7.0
 before_install:
-#  - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_8.x" | sudo -E bash -
+  - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_8.x" | sudo -E bash -
   - sudo apt-get install -y wput
-#script:
-#  - composer install
-#  - node ./build/generateHashes
+script:
+  - npm install
+  - composer install
+  - npm run assets
 after_success:
-  - wput ./src ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/src/
-#  - find ./*.{js,php,css,png,htaccess} -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
-#  - find ./src -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/src/ \;
-#  - find ./etc -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/etc/ \;
-#  - find ./app -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/app/ \;
-#  - find ./vendor -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/vendor/ \;
-#  - find ./templates -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/templates/ \;
+  - npm run upload
