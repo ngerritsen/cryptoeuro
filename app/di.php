@@ -10,14 +10,15 @@ use Cryptoeuro\HttpService;
 use Cryptoeuro\PdoFactory;
 use Cryptoeuro\PriceWatch\PriceWatchController;
 use Cryptoeuro\PriceWatch\PriceWatchService;
+use Cryptoeuro\Scraper\Scraper;
 use League\Container\Argument\RawArgument;
 use League\Container\Container;
 use Slim\App;
 use Slim\CallableResolver;
 
-require 'vendor/autoload.php';
-
 const ROOT = __DIR__ . '/..';
+
+require ROOT . '/vendor/autoload.php';
 
 $assetHashes = require ROOT . '/etc/hashes.php';
 $config = require ROOT . '/etc/config.php';
@@ -60,4 +61,12 @@ $container->add(PriceWatchController::class)->withArguments([
     Twig_Environment::class,
     PriceWatchService::class,
     new RawArgument($assetHashes)
+]);
+
+$container->add(Scraper::class)->withArguments([
+    CryptocurrencyMarkets::class,
+    BitcoinMarket::class,
+    Cryptocurrencies::class,
+    CryptocurrencyPriceHistory::class,
+    BitcoinPriceHistory::class
 ]);
