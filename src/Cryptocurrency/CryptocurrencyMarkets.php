@@ -1,23 +1,49 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-class CryptocurrencyMarket {
+namespace Cryptoeuro\Cryptocurrency;
+
+use Cryptoeuro\HttpService;
+
+class CryptocurrencyMarkets
+{
     const BITTREX_API = 'https://bittrex.com/api/v1.1/public';
 
     private $httpService;
 
-    public function __construct(HttpService $httpService) {
+    public function __construct(HttpService $httpService)
+    {
         $this->httpService = $httpService;
     }
 
-    public function getAll(): array {
+    public function getAll(): array
+    {
         $btcBasedMarkets = $this->getBtcBasedMarkets();
         $marketSummaries = $this->getMarketSummaries();
 
         return $this->mergeMarketsWithSummaries($btcBasedMarkets, $marketSummaries);
     }
 
-    private function mergeMarketsWithSummaries(array $btcBasedMarkets, array $marketSummaries): array {
+    /**
+     * @param string $currency
+     * @return array[]
+     * @throws InvalidMarketException
+     */
+    public function get(string $currency): array
+    {
+        $url = static::BITTREX_API . '/getmarketsummary?market=btc-' . $currency;
+
+        $marketData = $this->httpService->jsonRequest($url);
+
+        if (!$marketData['success'] && $marketData['message'] === 'INVALID_MARKET') {
+            throw new InvalidMarketException($currency);
+        }
+
+        return $marketData['result'][0];
+    }
+
+    private function mergeMarketsWithSummaries(array $btcBasedMarkets, array $marketSummaries): array
+    {
         return array_map(function (array $market) use ($marketSummaries): array {
             $summary = $this->findMarketSummary($marketSummaries, $market['MarketCurrency']);
 
@@ -29,7 +55,8 @@ class CryptocurrencyMarket {
         }, $btcBasedMarkets);
     }
 
-    private function findMarketSummary(array $marketSummaries, string $currency): array {
+    private function findMarketSummary(array $marketSummaries, string $currency): array
+    {
         foreach ($marketSummaries as $summary) {
             if ('BTC-' . $currency === $summary['MarketName']) {
                 return $summary;
@@ -39,7 +66,8 @@ class CryptocurrencyMarket {
         return null;
     }
 
-    private function getBtcBasedMarkets(): array {
+    private function getBtcBasedMarkets(): array
+    {
         $marketData = $this->httpService->jsonRequest(static::BITTREX_API . '/getmarkets');
 
         return array_filter($marketData['result'], function (array $market): bool {
@@ -47,7 +75,8 @@ class CryptocurrencyMarket {
         });
     }
 
-    private function getMarketSummaries(): array {
+    private function getMarketSummaries(): array
+    {
         $marketSummaryData = $this->httpService->jsonRequest(static::BITTREX_API . '/getmarketsummaries');
 
         return $marketSummaryData['result'];

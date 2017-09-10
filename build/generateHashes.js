@@ -23,7 +23,7 @@ return [
 }
 
 function writePhp(php) {
-  fs.writeFileSync(path.join(__dirname + '/../hashes.php'), php);
+  fs.writeFileSync(path.join(__dirname + '/../etc/hashes.php'), php);
 }
 
 function hash(source) {
@@ -42,4 +42,3 @@ function hash(source) {
     hash.end();
   });
 }
-

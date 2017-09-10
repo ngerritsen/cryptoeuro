@@ -1,8 +1,15 @@
 language: node_js
 node_js:
   - 8
+before_install:
+  - sudo add-apt-repository ppa:ondrej/php
+  - sudo apt-get update
+  - sudo apt-get install php7.1
+  - sudo apt-get install composer
 script:
+  - composer install
   - node ./build/generateHashes
 after_success:
-  - find ./*.{js,php,css,png} -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
-
+  - find ./*.{js,php,css,png,htaccess} -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
+  - find ./**/*.{php} -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/ \;
+  - find ./vendor/** -type f -exec curl -3 --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/vendor/ \;

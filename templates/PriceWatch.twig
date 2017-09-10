@@ -1,0 +1,45 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="keywords" content="crypto, currencies, euro, bitcoin">
+<meta name="description" content="Converts cryptocurrencies to euro">
+<meta name="keywords" content="crypto, currencies, euro, bitcoin">
+
+<title>Cryptoeuro</title>
+
+<link rel="shortcut icon" href="../favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono">
+<link rel="stylesheet" href="style.css?{{ asset_hashes.css }}">
+
+<div class="container">
+    <main class="js-container">
+        <ul class="currencies">
+            {% for currency in currencies %}
+                <li class="currency">
+                    {% if currency.error is null %}
+                        <p class="value">
+                           {{ currency.amount }} {{ currency.currency | upper }}<br>
+                            € {{ currency.current_value|number_format(2, ',', '.') }}
+                        </p>
+                    {% else %}
+                        <p class="error">{{ currency.error }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+    <footer>
+        <p class="js-time time"></p>
+
+        <p class="explain">
+            Type the currencies to convert in the query string, optionally with an amount, for example:
+            <i>"?LTC=120&amp;ETH=32.5"</i>. Auto refreshes every minute.
+        </p>
+
+        <p class="info">
+            Currency is converted to BTC using <a class="link" href="https://bittrex.com">Bittrex</a>,
+            then to EUR using <a class="link" href="https://coinbase.com">Coinbase</a>. All according to sell prices.
+        </p>
+    </footer>
+</div>
+
+<script src="main.js?{{ asset_hashes.css }}"></script>

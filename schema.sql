@@ -1,8 +1,7 @@
 CREATE TABLE cryptocurrency (
     currency varchar(8) NOT NULL PRIMARY KEY,
-    transaction_cost float,
     logo_url varchar(255),
-    name varchar(16)
+    name varchar(64)
 );
 
 CREATE TABLE cryptocurrency_price (

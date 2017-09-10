@@ -1,0 +1,13 @@
+{
+    "name": "ngerritsen/cryptoeuro",
+    "require": {
+        "slim/slim": "^3.8",
+        "league/container": "^2.4",
+        "twig/twig": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cryptoeuro\\": "src/"
+        }
+    }
+}

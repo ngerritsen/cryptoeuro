@@ -1,1 +1,4 @@
-hashes.php
+etc/hashes.php
+vendor
+.idea
+.template-cache
