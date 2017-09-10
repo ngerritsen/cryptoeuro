@@ -15,6 +15,7 @@ $secretsJsonLocation = __DIR__ . '/../../../../secrets.json';
 if (file_exists($secretsJsonLocation)) {
     $secrets = json_decode(file_get_contents($secretsJsonLocation), true);
 
+    $config['mysql']['db'] = $secrets['mysql_db'];
     $config['mysql']['username'] = $secrets['mysql_user'];
     $config['mysql']['password'] = $secrets['mysql_password'];
 }
