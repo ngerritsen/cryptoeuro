@@ -4,3 +4,4 @@ vendor
 .template-cache
 node_modules
 upload.sh
+main.js

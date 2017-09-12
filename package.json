@@ -4,9 +4,12 @@
   "description": "Converts cryptocurrencies to euro",
   "main": "main.js",
   "scripts": {
-    "assets": "node ./build/generateHashes.js",
+    "build": "npm run js; npm run hashes",
+    "hashes": "node ./build/generateHashes.js",
+    "js": "NODE_ENV=production webpack",
+    "js:watch": "webpack --watch",
     "upload": "node ./build/generateUploadScript.js; sh upload.sh",
-    "start": "php -S localhost:8080"
+    "start": "concurrently 'php -S localhost:8080' 'npm run js:watch' --names 'php, js'"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,31 @@
   },
   "homepage": "https://github.com/ngerritsen/cryptoeuro#readme",
   "devDependencies": {
-    "glob": "^7.1.2"
+    "autoprefixer": "^7.1.4",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "concurrently": "^3.5.0",
+    "es6-promise": "^4.1.1",
+    "glob": "^7.1.2",
+    "postcss": "^6.0.11",
+    "postcss-cli": "^4.1.1",
+    "webpack": "^3.5.6",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "ie >= 11"
+            ]
+          }
+        }
+      ]
+    ]
   }
 }

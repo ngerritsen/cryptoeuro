@@ -7,6 +7,6 @@ before_install:
 script:
   - npm install
   - composer install
-  - npm run assets
+  - npm run build
 after_success:
   - npm run upload
