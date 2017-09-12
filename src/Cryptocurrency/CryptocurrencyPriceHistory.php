@@ -28,6 +28,29 @@ class CryptocurrencyPriceHistory
         $statement->execute();
     }
 
+    public function getLastDay(string $currency)
+    {
+        $connection = $this->pdoFactory->createConnection();
+
+        $statement = $connection->prepare("
+            SELECT * FROM cryptocurrency_price
+            WHERE currency='{$currency}'
+            ORDER BY ABS(TIMESTAMPDIFF(
+                SECOND,
+                time,
+                TIMESTAMPADD(
+                    HOUR,
+                    -24,
+                    NOW()
+                )
+            )) LIMIT 1;
+        ");
+
+        $statement->execute();
+
+        return $statement->fetchAll()[0];
+    }
+
     private function createValues(array $currencies): string
     {
         $valueStrings = array_map(function (array $currency): string {

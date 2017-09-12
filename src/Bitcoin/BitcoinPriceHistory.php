@@ -29,4 +29,26 @@ class BitcoinPriceHistory
             ':buy' => $buy
         ]);
     }
+
+    public function getLastDay()
+    {
+        $connection = $this->pdoFactory->createConnection();
+
+        $statement = $connection->prepare("
+            SELECT * FROM bitcoin_price
+            ORDER BY ABS(TIMESTAMPDIFF(
+                SECOND,
+                time,
+                TIMESTAMPADD(
+                    HOUR,
+                    -24,
+                    NOW()
+                )
+            )) LIMIT 1;
+        ");
+
+        $statement->execute();
+
+        return $statement->fetchAll()[0];
+    }
 }

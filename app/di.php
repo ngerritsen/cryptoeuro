@@ -54,7 +54,9 @@ $container->add(Cryptocurrencies::class)->withArgument(PdoFactory::class);
 
 $container->add(PriceWatchService::class)->withArguments([
     CryptocurrencyMarkets::class,
-    BitcoinMarket::class
+    CryptocurrencyPriceHistory::class,
+    BitcoinMarket::class,
+    BitcoinPriceHistory::class
 ]);
 
 $container->add(PriceWatchController::class)->withArguments([

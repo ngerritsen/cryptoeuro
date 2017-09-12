@@ -36,6 +36,18 @@ body {
   line-height: 1.5;
 }
 
+.value-change {
+  font-size: 18px;
+}
+
+.value-change--increase {
+  color: #2ecc71;
+}
+
+.value-change--decrease {
+  color: #e74c3c;
+}
+
 .error {
   font-size: 18px;
   color: #e74c3c;

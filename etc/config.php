@@ -4,7 +4,7 @@ declare(strict_types = 1);
 $config = [
     'mysql' => [
         'db' => 'cryptoeuro',
-        'host' => 'localhost',
+        'host' => '127.0.0.1',
         'username' => 'root',
         'password' => 'development'
     ]

@@ -5,7 +5,9 @@ namespace Cryptoeuro\PriceWatch;
 
 
 use Cryptoeuro\Bitcoin\BitcoinMarket;
+use Cryptoeuro\Bitcoin\BitcoinPriceHistory;
 use Cryptoeuro\Cryptocurrency\CryptocurrencyMarkets;
+use Cryptoeuro\Cryptocurrency\CryptocurrencyPriceHistory;
 use Cryptoeuro\Cryptocurrency\InvalidMarketException;
 
 class PriceWatchService
@@ -13,16 +15,32 @@ class PriceWatchService
     /** @var @var CryptocurrencyMarkets */
     private $cryptocurrencyMarkets;
 
+    /** @var CryptocurrencyPriceHistory */
+    private $cryptocurrencyPriceHistory;
+
     /** @var @var BitcoinMarket */
     private $bitcoinMarket;
 
+    /** @var BitcoinPriceHistory */
+    private $bitcointPriceHistory;
+
+    /**
+     * @param CryptocurrencyMarkets $cryptocurrencyMarkets
+     * @param CryptocurrencyPriceHistory $cryptocurrencyPriceHistory
+     * @param BitcoinMarket $bitcoinMarket
+     * @param BitcoinPriceHistory $bitcoinPriceHistory
+     */
     public function __construct(
         CryptocurrencyMarkets $cryptocurrencyMarkets,
-        BitcoinMarket $bitcoinMarket
+        CryptocurrencyPriceHistory $cryptocurrencyPriceHistory,
+        BitcoinMarket $bitcoinMarket,
+        BitcoinPriceHistory $bitcoinPriceHistory
     )
     {
         $this->cryptocurrencyMarkets = $cryptocurrencyMarkets;
+        $this->cryptocurrencyPriceHistory = $cryptocurrencyPriceHistory;
         $this->bitcoinMarket = $bitcoinMarket;
+        $this->bitcoinPriceHistory = $bitcoinPriceHistory;
     }
 
     /**
@@ -32,6 +50,7 @@ class PriceWatchService
     public function getPrices($requestedCurrencies): array
     {
         $bitcoinSellPrice = $this->bitcoinMarket->getPrices()['sell'];
+        $bitcoinLastDaySellPrice = (float)$this->bitcoinPriceHistory->getLastDay()['sell'];
         $results = [];
 
         foreach ($requestedCurrencies as $requestedCurrency) {
@@ -39,13 +58,18 @@ class PriceWatchService
             $amount = $requestedCurrency['amount'];
 
             try {
-                $market = $this->cryptocurrencyMarkets->get($currency);
+                $currentSellPrice = $this->cryptocurrencyMarkets->get($currency)['Bid'];
+                $lastDaySellPrice = (float)$this->cryptocurrencyPriceHistory->getLastDay($currency)['sell'];
+
+                $currentValue = $this->calculateEuroValue($currentSellPrice, $amount, $bitcoinSellPrice);
+                $lastDayValue = $this->calculateEuroValue($lastDaySellPrice, $amount, $bitcoinLastDaySellPrice);
 
                 $results[] = [
                     'error' => null,
                     'currency' => $currency,
                     'amount' => $amount,
-                    'current_value' => $this->calculateCurrentValue($market['Bid'], $amount, $bitcoinSellPrice),
+                    'current_value' => $currentValue,
+                    'value_change' => $this->calculateValueChange($currentValue, $lastDayValue)
                 ];
             } catch (InvalidMarketException $exception) {
                 $results[] = [
@@ -57,12 +81,17 @@ class PriceWatchService
         return $results;
     }
 
-    private function calculateCurrentValue(
+    private function calculateEuroValue(
         float $marketSellPrice,
         float $amount,
         float $bitcoinSellPrice
     ): float
     {
         return $bitcoinSellPrice * $marketSellPrice * $amount;
+    }
+
+    private function calculateValueChange(float $currentValue, float $lastDayValue)
+    {
+        return ($currentValue - $lastDayValue) / $lastDayValue * 100;
     }
 }

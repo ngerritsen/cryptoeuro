@@ -19,6 +19,9 @@
                         <p class="value">
                            {{ currency.amount }} {{ currency.currency | upper }}<br>
                             € {{ currency.current_value|number_format(2, ',', '.') }}
+                            <span class="value-change value-change--{{ currency.value_change > 0 ? 'increase' : 'decrease' }}">
+                                {{ currency.value_change > 0 ? '+' : '' }}{{ currency.value_change|number_format(2) }}%
+                            </span>
                         </p>
                     {% else %}
                         <p class="error">{{ currency.error }}</p>
