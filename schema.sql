@@ -1,3 +1,5 @@
+USE cryptoeuro;
+
 CREATE TABLE cryptocurrency (
     currency varchar(8) NOT NULL PRIMARY KEY,
     logo_url varchar(255),
