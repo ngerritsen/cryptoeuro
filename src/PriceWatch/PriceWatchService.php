@@ -12,6 +12,8 @@ use Cryptoeuro\Cryptocurrency\InvalidMarketException;
 
 class PriceWatchService
 {
+    const BITCOIN = 'BTC';
+
     /** @var @var CryptocurrencyMarkets */
     private $cryptocurrencyMarkets;
 
@@ -58,18 +60,19 @@ class PriceWatchService
             $amount = $requestedCurrency['amount'];
 
             try {
-                $currentSellPrice = $this->cryptocurrencyMarkets->get($currency)['Bid'];
-                $lastDaySellPrice = (float)$this->cryptocurrencyPriceHistory->getLastDay($currency)['sell'];
-
-                $currentValue = $this->calculateEuroValue($currentSellPrice, $amount, $bitcoinSellPrice);
-                $lastDayValue = $this->calculateEuroValue($lastDaySellPrice, $amount, $bitcoinLastDaySellPrice);
+                list($currentValue, $valueChange) = $this->getCurrencyValues(
+                    $currency,
+                    $amount,
+                    $bitcoinSellPrice,
+                    $bitcoinLastDaySellPrice
+                );
 
                 $results[] = [
                     'error' => null,
                     'currency' => $currency,
                     'amount' => $amount,
                     'current_value' => $currentValue,
-                    'value_change' => $this->calculateValueChange($currentValue, $lastDayValue)
+                    'value_change' => $valueChange
                 ];
             } catch (InvalidMarketException $exception) {
                 $results[] = [
@@ -93,5 +96,34 @@ class PriceWatchService
     private function calculateValueChange(float $currentValue, float $lastDayValue)
     {
         return ($currentValue - $lastDayValue) / $lastDayValue * 100;
+    }
+
+    private function getCurrencyValues(
+        string $currency,
+        float $amount,
+        float $bitcoinSellPrice,
+        float $bitcoinLastDaySellPrice
+    ): array
+    {
+        list($currentSellPrice, $lastDaySellPrice) = $this->getCurrencySellPrices($currency);
+
+        $currentValue = $this->calculateEuroValue($currentSellPrice, $amount, $bitcoinSellPrice);
+        $lastDayValue = $this->calculateEuroValue($lastDaySellPrice, $amount, $bitcoinLastDaySellPrice);
+        $valueChange = $this->calculateValueChange($currentValue, $lastDayValue);
+
+        return [$currentValue, $valueChange];
+    }
+
+    private function getCurrencySellPrices(string $currency): array
+    {
+        if (strtoupper($currency) === self::BITCOIN) {
+            $currentSellPrice = 1;
+            $lastDaySellPrice = 1;
+        } else {
+            $currentSellPrice = $this->cryptocurrencyMarkets->get($currency)['Bid'];
+            $lastDaySellPrice = (float)$this->cryptocurrencyPriceHistory->getLastDay($currency)['sell'];
+        }
+
+        return [$currentSellPrice, $lastDaySellPrice];
     }
 }

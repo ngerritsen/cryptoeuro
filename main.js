@@ -12,8 +12,11 @@
   
   function refresh() {
     var request = new XMLHttpRequest();
+
     request.open('GET', window.location.pathname + window.location.search, true);
-  
+
+    request.setRequestHeader('X-CurrenciesOnly', '1');
+
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         var html = request.responseText;
@@ -27,14 +30,7 @@
   }
   
   function replaceContent(html) {
-    var doc = document.createElement('div');
-  
-    doc.innerHTML = html;
-  
-    var newContent = doc.querySelector(CONTAINER_SELECTOR).innerHTML;
-    var containerEl = document.querySelector(CONTAINER_SELECTOR);
-
-    containerEl.innerHTML = newContent;
+    document.querySelector(CONTAINER_SELECTOR).innerHTML = html;
   }
   
   function ready(fn) {
@@ -57,6 +53,6 @@
   }
 
   function addZero(timePart) {
-    return timePart = timePart < 10 ? '0' + timePart : timePart;
+    return timePart < 10 ? '0' + timePart : timePart;
   }
 })();

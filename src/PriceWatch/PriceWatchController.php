@@ -34,10 +34,16 @@ class PriceWatchController
 
         $currencies = $this->priceWatchService->getPrices($requestedCurrencies);
 
-        $html = $this->twig->render('PriceWatch.twig', [
-            'currencies' => $currencies,
-            'asset_hashes' => $this->assetHashes
-        ]);
+        $sendCurrenciesOnly = !empty($request->getHeader('X-CurrenciesOnly'));
+
+        if ($sendCurrenciesOnly) {
+            $html = $this->twig->render('Currencies.twig', ['currencies' => $currencies]);
+        } else {
+            $html = $this->twig->render('PriceWatch.twig', [
+                'currencies' => $currencies,
+                'asset_hashes' => $this->assetHashes
+            ]);
+        }
 
         $response->getBody()->write($html);
 

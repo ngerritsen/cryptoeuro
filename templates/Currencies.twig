@@ -1,0 +1,20 @@
+<ul class="currencies">
+    {% for currency in currencies %}
+        <li class="currency">
+            {% if currency.error is null %}
+                {% set value = currency.current_value|number_format(2, ',', '.') %}
+                {% set value_change = currency.value_change|number_format(2) %}
+
+                <p class="value">
+                    {{ currency.amount }} {{ currency.currency | upper }}<br>
+                    € {{ value}}
+                    <span class="value-change value-change--{{ value_change > 0 ? 'increase' : 'decrease' }}">
+                        {{ value_change > 0 > 0 ? '+' : '' }}{{ value_change }}%
+                    </span>
+                </p>
+            {% else %}
+                <p class="error">{{ currency.error }}</p>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

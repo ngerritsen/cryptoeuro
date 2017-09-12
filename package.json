@@ -4,10 +4,12 @@
   "description": "Converts cryptocurrencies to euro",
   "main": "main.js",
   "scripts": {
-    "assets": "node ./build/generateHashes.js",
+    "assets:hashes": "node ./build/generateHashes.js",
+    "assets": "npm run assets:hashes",
     "upload": "node ./build/generateUploadScript.js; sh upload.sh",
+    "start": "php -S localhost:8080",
     "start:php": "php -S localhost:8080",
-    "start:mysql": "docker run --name cryptoeuro-mysql -e MYSQL_ROOT_PASSWORD=development mysql",
+    "",
     "provision": ""
   },
   "repository": {
