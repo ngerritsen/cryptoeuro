@@ -6,7 +6,7 @@ $config = [
         'db' => 'cryptoeuro',
         'host' => 'localhost',
         'username' => 'root',
-        'password' => ''
+        'password' => 'development'
     ]
 ];
 
