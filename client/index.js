@@ -7,7 +7,6 @@ import updateCountdown from './updateCountdown';
 const REFRESH_INTERVAL = 60000;
 const TIMER_TICK_RATE = 100;
 
-
 const timer = createTimer(REFRESH_INTERVAL, TIMER_TICK_RATE);
 
 ready()
