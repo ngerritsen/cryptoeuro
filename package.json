@@ -4,13 +4,9 @@
   "description": "Converts cryptocurrencies to euro",
   "main": "main.js",
   "scripts": {
-    "assets:hashes": "node ./build/generateHashes.js",
-    "assets": "npm run assets:hashes",
+    "assets": "node ./build/generateHashes.js",
     "upload": "node ./build/generateUploadScript.js; sh upload.sh",
-    "start": "php -S localhost:8080",
-    "start:php": "php -S localhost:8080",
-    "",
-    "provision": ""
+    "start": "php -S localhost:8080"
   },
   "repository": {
     "type": "git",
