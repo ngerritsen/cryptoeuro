@@ -62,7 +62,7 @@ body {
 
 .countdown {
   height: 2px;
-  width: 210px;
+  width: 220px;
   margin: 0 auto 28px;
   background-color: #333;
 }
@@ -71,6 +71,99 @@ body {
   height: 100%;
   background-color: #bbb;
 }
+
+.picker {
+  margin-bottom: 36px;
+}
+
+.picker__form {
+  padding: 0 0 36px;
+  border-bottom: 1px solid #666;
+}
+
+.picker__input,
+.picker__select,
+.picker__button {
+  border: 0;
+  border-radius: 0;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.picker__select {
+  padding-right: 25px;
+  -webkit-appearance: none;
+  background-color: #ddd;
+}
+
+.picker__select-container {
+  position: relative;
+}
+
+.picker__label {
+  font-size: 13px;
+  color: #ccc;
+  margin-right: 6px;
+}
+
+.picker__select-container::before {
+  content: '▼';
+  position: absolute;
+  color: #111;
+  right: 14px;
+  font-size: 10px;
+  top: 3px;
+}
+
+.picker__button {
+  text-transform: uppercase;
+  background-color: #eee;
+  color: #000;
+}
+
+.picker__button:disabled,
+.picker__button:disabled:hover,
+.picker__button:disabled:focus {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #333;
+}
+
+.picker__input {
+  background-color: #222;
+  color: #fff;
+}
+
+.picker__input:focus {
+  outline: none;
+  background-color: #444;
+}
+
+.picker__button:focus,
+.picker__button:hover {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.picker__fieldset {
+  border: none;
+  padding: 0;
+}
+
+.picker__legend {
+  position: relative;
+  top: -6px;
+  font-size: 16px;
+  padding: 10px;
+  color: #ddd;
+}
+
+.picker__form-section {
+  margin-bottom: 18px;
+}
+
+
 
 .link,
 .link:visited {

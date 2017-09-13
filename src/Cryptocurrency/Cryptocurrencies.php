@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Cryptoeuro\Cryptocurrency;
 
 use Cryptoeuro\PdoFactory;
+use PDO;
 
 class Cryptocurrencies
 {
@@ -26,6 +27,17 @@ class Cryptocurrencies
         ");
 
         $statement->execute();
+    }
+
+    public function getAll(): array
+    {
+        $connection = $this->pdoFactory->createConnection();
+
+        $statement = $connection->prepare("SELECT currency, name FROM cryptocurrency");
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     private function createValues(array $currencies): string

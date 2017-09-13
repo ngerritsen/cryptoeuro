@@ -4,6 +4,7 @@ declare(strict_types=1);
 use Cryptoeuro\Bitcoin\BitcoinMarket;
 use Cryptoeuro\Bitcoin\BitcoinPriceHistory;
 use Cryptoeuro\Cryptocurrency\Cryptocurrencies;
+use Cryptoeuro\Cryptocurrency\CryptocurrencyController;
 use Cryptoeuro\Cryptocurrency\CryptocurrencyMarkets;
 use Cryptoeuro\Cryptocurrency\CryptocurrencyPriceHistory;
 use Cryptoeuro\HttpService;
@@ -51,6 +52,7 @@ $container->add(BitcoinPriceHistory::class)->withArgument(PdoFactory::class);
 $container->add(CryptocurrencyMarkets::class)->withArgument(HttpService::class);
 $container->add(CryptocurrencyPriceHistory::class)->withArgument(PdoFactory::class);
 $container->add(Cryptocurrencies::class)->withArgument(PdoFactory::class);
+$container->add(CryptocurrencyController::class)->withArgument(Cryptocurrencies::class);
 
 $container->add(PriceWatchService::class)->withArguments([
     CryptocurrencyMarkets::class,
