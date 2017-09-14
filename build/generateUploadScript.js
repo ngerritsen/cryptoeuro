@@ -9,7 +9,8 @@ const shouldUploadVendor = execSync('git diff HEAD^ HEAD', { encoding: 'utf-8' }
   .includes('composer.lock');
 
 const paths = [
-  ...glob.sync('*.{php,js,css,png,htaccess}'),
+  ...glob.sync('.htaccess'),
+  ...glob.sync('*.{php,js,css,png}'),
   ...glob.sync('app/**/*.php'),
   ...glob.sync('etc/**/*.php'),
   ...glob.sync('src/**/*.php'),
