@@ -1,6 +1,4 @@
-export default function createPicker(pubSub) {
-  const pickerEl = document.querySelector('.js-picker');
-
+export default function createPicker(pickerEl, pubSub) {
   renderButton();
   
   function pickCurrency() {

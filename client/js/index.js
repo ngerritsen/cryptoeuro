@@ -15,11 +15,14 @@ const TIMER_TICK_RATE = 100;
 const pubSub = createPubSub(pubSub);
 const timer = createTimer(pubSub, REFRESH_INTERVAL, TIMER_TICK_RATE);
 const currencyService = createCurrencyService(pubSub);
+let currencies = null;
 
 ready()
   .then(() => {
-    createPicker(pubSub);
-    createCurrencies(pubSub);
+    const pickerEl = document.querySelector('.js-picker');
+
+    createPicker(pickerEl, pubSub);
+    currencies = createCurrencies(document.querySelector('.js-currencies'), pubSub);
 
     updateTime();
     timer.start();
@@ -31,11 +34,12 @@ ready()
     pubSub.on('timer.done', currencyService.refresh);
     pubSub.on('timer.update', updateCountdown);
 
+    pubSub.on('currencyService.retrievingCurrencies', () => currencies.showLoader());
     pubSub.on('currencyService.currenciesRetrieved', (html) => {
       document.querySelector('.js-container').innerHTML = html;
       updateTime();
       timer.restart();
-      createCurrencies(pubSub);
+      currencies = createCurrencies(document.querySelector('.js-currencies'), pubSub);
     });
 
     pubSub.on('currencies.delete', currencyService.removeCurrency);

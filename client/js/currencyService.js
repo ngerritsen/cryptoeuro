@@ -14,6 +14,7 @@ export default function createCurrencyService(pubSub) {
 
   function refresh(query = window.location.search) {
     updateUrl(query);
+    pubSub.emit('currencyService.retrievingCurrencies');
 
     return retrieveNewContent(query)
       .then(html => pubSub.emit('currencyService.currenciesRetrieved', html))
