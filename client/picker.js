@@ -50,9 +50,7 @@ export default function createPicker() {
   }
 
   function getCurrencies() {
-    const basePath = removeTrailingSlash(window.location.pathname);
-
-    return fetch(basePath + '/api/currencies')
+    return fetch('/api/currencies')
       .then((response) => {
         if (response.status < 200 || response.status >= 400) {
           throw new Error('Retrieving content failed.');
@@ -60,14 +58,6 @@ export default function createPicker() {
 
         return response.json();
       });
-  }
-  
-  function removeTrailingSlash(url) {
-    if (!url.charAt(url.length) === '/') {
-      return url;
-    }
-    
-    return url.slice(0, -1);
   }
 
   function renderLoader() {

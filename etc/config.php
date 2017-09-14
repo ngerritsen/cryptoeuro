@@ -10,7 +10,7 @@ $config = [
     ]
 ];
 
-$secretsJsonLocation = __DIR__ . '/../../../../secrets.json';
+$secretsJsonLocation = __DIR__ . '/../../../secrets.json';
 
 if (file_exists($secretsJsonLocation)) {
     $secrets = json_decode(file_get_contents($secretsJsonLocation), true);

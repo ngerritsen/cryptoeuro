@@ -26,7 +26,7 @@ const uploadScript = paths
 
     return (
       `curl -3 --ftp-create-dirs -T ${filepath} ` +
-      `ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/nielsgerritsen/cryptoeuro/${dir}/`
+      `ftp://$FTP_USER:$FTP_PASSWORD@ftp.carehr.nl/public_html/cryptoeuro/${dir}/`
     );
   })
   .join('\n');

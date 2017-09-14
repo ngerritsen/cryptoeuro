@@ -11,7 +11,7 @@ function replaceHtml(html) {
 }
 
 function retrieveNewContent() {
-  const url = window.location.pathname + window.location.search;
+  const url = '/' + window.location.search;
   const headers = new Headers({ 'X-CurrenciesOnly': true });
 
   return fetch(url, { headers })
