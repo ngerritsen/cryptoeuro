@@ -33,7 +33,10 @@ class Cryptocurrencies
     {
         $connection = $this->pdoFactory->createConnection();
 
-        $statement = $connection->prepare("SELECT currency, name FROM cryptocurrency");
+        $statement = $connection->prepare("
+          SELECT currency, name FROM cryptocurrency
+          ORDER BY currency
+        ");
 
         $statement->execute();
 
