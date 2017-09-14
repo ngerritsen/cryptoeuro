@@ -1,19 +1,26 @@
 <ul class="currencies">
     {% for currency in currencies %}
-        <li class="currency">
+        <li class="currency js-currency" data-currency="{{ currency.currency }}">
+            <div class="currency__delete-container">
+                <button class="js-currency-delete currency__delete">+</button>
+            </div>
+
             {% if currency.error is null %}
                 {% set value = currency.current_value|number_format(2, ',', '.') %}
                 {% set value_change = currency.value_change|number_format(2) %}
 
-                <p class="value">
+                <p class="currency__value">
                     {{ currency.amount }} {{ currency.currency | upper }}<br>
                     € {{ value}}
-                    <span class="value-change value-change--{{ value_change > 0 ? 'increase' : 'decrease' }}">
+                    <span class="
+                        currency__value-change
+                        currency__value-change--{{ value_change > 0 ? 'increase' : 'decrease' }}
+                    ">
                         {{ value_change > 0 > 0 ? '+' : '' }}{{ value_change }}%
                     </span>
                 </p>
             {% else %}
-                <p class="error">{{ currency.error }}</p>
+                <p class="currency__error">{{ currency.error }}</p>
             {% endif %}
         </li>
     {% endfor %}

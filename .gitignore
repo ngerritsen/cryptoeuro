@@ -5,3 +5,4 @@ vendor
 node_modules
 upload.sh
 main.js
+style.css

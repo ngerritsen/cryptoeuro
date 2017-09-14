@@ -1,0 +1,65 @@
+body {
+  font-family: 'Ubuntu Mono', monospace;
+  background-color: #000;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 24px 12px;
+  text-align: center;
+  min-width: 300px;
+  max-width: 410px;
+}
+
+.time {
+  color: #999;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.countdown {
+  height: 2px;
+  width: 220px;
+  margin: 0 auto 28px;
+  background-color: #333;
+}
+
+.countdown__bar {
+  height: 100%;
+  background-color: #bbb;
+}
+
+.link,
+.link:visited {
+  color: #206da0;
+  text-decoration: underline;
+}
+
+.link:hover,
+.link:focus {
+  color: #409ad6;
+  text-decoration: underline;
+}
+
+.explain,
+.info {
+  line-height: 1.2;
+}
+
+.explain {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.info {
+  color: #555;
+  font-size: 13px;
+}

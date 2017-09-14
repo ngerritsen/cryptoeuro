@@ -76,6 +76,7 @@ class PriceWatchService
                 ];
             } catch (InvalidMarketException $exception) {
                 $results[] = [
+                    'currency' => $currency,
                     'error' => $exception->getMessage()
                 ];
             }

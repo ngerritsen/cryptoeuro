@@ -1,9 +1,7 @@
-export default function createPicker() {
+export default function createPicker(pubSub) {
   const pickerEl = document.querySelector('.js-picker');
 
-  pickerEl.innerHTML = '<button class="picker__button js-picker-button">Add currency</button>';
-
-  getPickerButton().addEventListener('click', pickCurrency);
+  renderButton();
   
   function pickCurrency() {
     renderLoader();
@@ -18,33 +16,23 @@ export default function createPicker() {
   }
  
   function submit(event) {
-    event.preventDefault();
-
     const { currency, amount } = getFormValues();
 
-    if (!currency) {
-      return;
-    }
+    event.preventDefault();
 
-    addCurrency(currency, amount);
+    if (currency) {
+      addCurrency(currency, amount);
+      renderButton();
+    }
   }
 
   function addCurrency(currency, amount) {
-    const currentQuery = window.location.search;
-    const querySeparator = currentQuery === '' ? '?' : '&';
-
-    window.location.search = (
-      currentQuery +
-      querySeparator +
-      encodeURIComponent(currency) +
-      '=' +
-      amount
-    );
+    pubSub.emit('picker.picked', { currency, amount });
   }
 
   function getFormValues() {
     return {
-      amount: Number(pickerEl.querySelector('.js-amount').value || 0),
+      amount: Number(pickerEl.querySelector('.js-amount').value || 1),
       currency: pickerEl.querySelector('.js-select').value
     }
   }
@@ -58,6 +46,12 @@ export default function createPicker() {
 
         return response.json();
       });
+  }
+
+  function renderButton() {
+    pickerEl.innerHTML = '<button class="picker__button js-picker-button">Add currency</button>';
+
+    getPickerButton().addEventListener('click', pickCurrency);
   }
 
   function renderLoader() {
@@ -77,7 +71,7 @@ export default function createPicker() {
           <fieldset class="picker__fieldset">
               <legend class="picker__legend">Add a currency</legend>
               <div class="picker__form-section">
-                <label class="picker__label" for="currencies">Currency</label>
+                <label class="picker__label hidden" for="currencies">Currency</label>
                 <span class="picker__select-container">
                   <select id="currencies" class="picker__select js-select">
                       ${currencies.map(({ currency, name }) => (
