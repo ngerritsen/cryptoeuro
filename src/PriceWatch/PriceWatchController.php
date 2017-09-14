@@ -60,7 +60,7 @@ class PriceWatchController
 
         foreach ($queryParams as $param => $value) {
             $requestedCurrencies[] = [
-                'amount' => (float)((int)$value === 0 ? 1 : $value),
+                'amount' => is_numeric($value) ? (float)$value : 1,
                 'currency' => (string)$param
             ];
         }
