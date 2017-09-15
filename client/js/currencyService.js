@@ -25,7 +25,9 @@ export default function createCurrencyService(pubSub) {
   }
 
   function retrieveNewContent(query) {
-    const headers = new Headers({ 'X-CurrenciesOnly': true });
+    const headers = new Headers();
+
+    myHeaders.set('X-CurrenciesOnly', true);
 
     return fetch('/' + query, { headers })
       .then(response => {
